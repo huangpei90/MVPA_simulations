@@ -7,6 +7,7 @@ x = 2/sqrt(pi);                             % real contrast
 params.CNR= 0.05:0.001:0.1;                 % CNR range
 params.noisemat=x./params.CNR;              % Standard deviation of noise introduced
 params.thermal_noise = 4;                   % magnitude of thermal noise
+params.physio_vects = 10;                   % number of physiological vectors being simulated
 
 %Declare GLM for this study
 glm_var.TR = 2;                             % TR
@@ -122,11 +123,11 @@ function data = add_noise(noiseless_data, params,k)
     noise = params.noisemat(k);
     thermal_noise = params.thermal_noise;
     physio_noise = noise-thermal_noise;
-    noise_vect=normrnd(0,1,10,size(noiseless_data{1},2));       % physio noise consistent across voxels
+    noise_vect=normrnd(0,1,params.physio_vects,size(noiseless_data{1},2));       % physio noise consistent across voxels
     for i=1:size(noiseless_data,1)
-        noise_proj=normrnd(0,1,size(noiseless_data{i},1),10);   % projection vector of physio noise vector on data
+        noise_proj=normrnd(0,1,size(noiseless_data{i},1),params.physio_vects);   % projection vector of physio noise vector on data
         physio_rnd = noise_proj*noise_vect;
-        physio_rnd = physio_rnd/sqrt(10);
+        physio_rnd = physio_rnd/sqrt(params.physio_vects);
         thermal_rnd = normrnd(0,1,size(noiseless_data{i},1),size(noiseless_data{i},2));
         total_noise = physio_noise*physio_rnd+thermal_noise*thermal_rnd;
         data{i} = noiseless_data{i} + total_noise;
