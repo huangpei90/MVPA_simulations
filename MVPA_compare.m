@@ -1,3 +1,11 @@
+% Compare MVPA metrics. Requirements:
+% * SPM 12 - https://www.fil.ion.ucl.ac.uk/spm/software/spm12
+% * covdiag.m - https://github.com/jooh/pilab
+%
+% If using in your own work, please cite
+% Huang, P., Carlin, J. D., Alink, A., Kriegeskorte, N., Henson, R.N.A, & Correia, M.M.
+% Prospective Motion Correction Improves the Sensitivity of FMRI Pattern Decoding.
+% Human Brain Mapping, 39, 4018–31. https://doi.org/10.1002/hbm.24228.
 function MVPA_compare()
 
 params.beta_std=1;                          % Std in beta values across voxels
